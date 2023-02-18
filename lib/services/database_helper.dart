@@ -134,4 +134,10 @@ class DatabaseHelper {
 
     return List.generate(maps.length, (index) => Tag.fromJson(maps[index]));
   }
+
+  static Future<void> toggleComplete(BookStaging bookStaging) async {
+    final db = await _getDB();
+    bookStaging.status = bookStaging.status == 1 ? 0 : 1;
+    await updateBookStaging(bookStaging);
+  }
 }

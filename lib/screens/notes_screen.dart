@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:local_database/models/book_staging_model.dart';
 
 import '../models/note_model.dart';
 import '../services/database_helper.dart';
@@ -14,11 +15,16 @@ class NotesScreen extends StatefulWidget {
 
 class _NotesScreenState extends State<NotesScreen> {
   @override
+
+  void onCompleteHandler(BookStaging bookStaging){
+    DatabaseHelper.toggleComplete(bookStaging);
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[200],
         appBar: AppBar(
-          title: const Text('Notes'),
+          title: const Text('Books'),
           centerTitle: true,
         ),
         floatingActionButton: FloatingActionButton(
@@ -41,6 +47,7 @@ class _NotesScreenState extends State<NotesScreen> {
                 return ListView.builder(
                   itemBuilder: (context, index) => NoteWidget(
                     note: snapshot.data![index],
+                    bookStaging: new BookStaging(bookId: 1, bookTitle: 'bookTitle'),
                     onTap: () async {
                       await Navigator.push(
                           context,
@@ -79,6 +86,10 @@ class _NotesScreenState extends State<NotesScreen> {
                             );
                           });
                     },
+                    onComplete: (BookStaging bookStaging) async {
+
+                    },
+                    onEdit: (){},
                   ),
                   itemCount: snapshot.data!.length,
                 );
