@@ -9,8 +9,9 @@ class BookStaging {
   int? status;
   int? priority;
   List<String>? tags;
+  String? imageSrc;
 
-  BookStaging({this.bookstagingId, required this.bookId, required this.bookTitle, this.userNotes, this.userGuid, this.status, this.priority, this.tags});
+  BookStaging({this.bookstagingId, required this.bookId, required this.bookTitle, this.userNotes, this.userGuid, this.status, this.priority, this.tags, this.imageSrc});
 
   Map<String, dynamic> toJson() {
     return {
@@ -22,6 +23,7 @@ class BookStaging {
       'status': status,
       'priority': priority,
       'tags': tags != null ? json.encode(tags) : null,
+      'imageSrc': imageSrc,
     };
   }
 
@@ -35,6 +37,7 @@ class BookStaging {
       status: json['status'],
       priority: json['priority'],
       tags: json['tags'] != null ? List<String>.from(jsonDecode(json['tags'])) : null,
+      imageSrc: json['imageSrc'],
     );
   }
 }

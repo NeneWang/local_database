@@ -2,7 +2,7 @@ import 'package:local_database/models/note_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:local_database/models/book_staging_model.dart';
-
+import 'package:local_database/models/tag_model.dart';
 
 class DatabaseHelper {
   static const int _version = 1;
@@ -15,7 +15,7 @@ class DatabaseHelper {
               "CREATE TABLE Note(id INTEGER PRIMARY KEY, title TEXT NOT NULL, description TEXT NOT NULL);"
           );
           await db.execute(
-              "CREATE TABLE book_staging(bookstaging_id INTEGER PRIMARY KEY, book_id INTEGER NOT NULL, book_title TEXT NOT NULL, user_notes TEXT, user_guid TEXT, status INTEGER, priority INTEGER, tags TEXT);"
+              "CREATE TABLE book_staging(bookstaging_id INTEGER PRIMARY KEY, book_id INTEGER NOT NULL, book_title TEXT NOT NULL, user_notes TEXT, user_guid TEXT, status INTEGER, priority INTEGER, tags TEXT, image_src TEXT);"
           );
           await db.execute(
               "CREATE TABLE tags(tag_guid TEXT PRIMARY KEY, title TEXT NOT NULL, is_private INTEGER NOT NULL, owner INTEGER NOT NULL);"
@@ -95,5 +95,42 @@ class DatabaseHelper {
     }
 
     return List.generate(maps.length, (index) => BookStaging.fromJson(maps[index]));
+  }
+
+
+  //Tags
+  static Future<int> addTag(Tag tag) async {
+    final db = await _getDB();
+    return await db.insert("tags", tag.toJson(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  static Future<int> updateTag(Tag tag) async {
+    final db = await _getDB();
+    return await db.update("tags", tag.toJson(),
+        where: 'tagGuid = ?',
+        whereArgs: [tag.tagGuid],
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  static Future<int> deleteTag(Tag tag) async {
+    final db = await _getDB();
+    return await db.delete(
+      "tags",
+      where: 'tagGuid = ?',
+      whereArgs: [tag.tagGuid],
+    );
+  }
+
+  static Future<List<Tag>?> getAllTags() async {
+    final db = await _getDB();
+
+    final List<Map<String, dynamic>> maps = await db.query("tags");
+
+    if (maps.isEmpty) {
+      return null;
+    }
+
+    return List.generate(maps.length, (index) => Tag.fromJson(maps[index]));
   }
 }
