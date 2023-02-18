@@ -5,7 +5,7 @@ import 'package:local_database/models/book_staging_model.dart';
 import 'package:local_database/models/tag_model.dart';
 
 class DatabaseHelper {
-  static const int _version = 1;
+  static const int _version = 2;
   static const String _dbName = "Notes.db";
 
   static Future<Database> _getDB() async {
@@ -20,7 +20,8 @@ class DatabaseHelper {
           await db.execute(
               "CREATE TABLE tags(tag_guid TEXT PRIMARY KEY, title TEXT NOT NULL, is_private INTEGER NOT NULL, owner INTEGER NOT NULL);"
           );
-        }
+        },
+      version: _version
     );
   }
 
