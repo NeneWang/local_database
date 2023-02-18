@@ -8,9 +8,15 @@ class DatabaseHelper {
 
   static Future<Database> _getDB() async {
     return openDatabase(join(await getDatabasesPath(), _dbName),
-        onCreate: (db, version) async => await db.execute(
-            "CREATE TABLE Note(id INTEGER PRIMARY KEY, title TEXT NOT NULL, description TEXT NOT NULL);"),
-        version: _version);
+        onCreate: (db, version) async {
+          await db.execute(
+              "CREATE TABLE Note(id INTEGER PRIMARY KEY, title TEXT NOT NULL, description TEXT NOT NULL);"
+          );
+          await db.execute(
+              "CREATE TABLE book_staging(bookstaging_id INTEGER PRIMARY KEY, book_id INTEGER NOT NULL, book_title TEXT NOT NULL, user_notes TEXT, user_guid TEXT, status INTEGER, priority INTEGER, tags TEXT);"
+          );
+        }
+    );
   }
 
   static Future<int> addNote(Note note) async {
