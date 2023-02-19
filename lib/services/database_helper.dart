@@ -5,7 +5,7 @@ import 'package:local_database/models/book_staging_model.dart';
 import 'package:local_database/models/tag_model.dart';
 
 class DatabaseHelper {
-  static const int _version = 2;
+  static const int _version = 4;
   static const String _dbName = "Notes.db";
 
   static Future<Database> _getDB() async {
@@ -15,7 +15,7 @@ class DatabaseHelper {
               "CREATE TABLE Note(id INTEGER PRIMARY KEY, title TEXT NOT NULL, description TEXT NOT NULL);"
           );
           await db.execute(
-              "CREATE TABLE book_staging(bookstaging_id INTEGER PRIMARY KEY, book_id INTEGER NOT NULL, book_title TEXT NOT NULL, user_notes TEXT, user_guid TEXT, status INTEGER, priority INTEGER, tags TEXT, image_src TEXT);"
+              "CREATE TABLE book_staging(bookstaging_id INTEGER PRIMARY KEY, book_id INTEGER, book_title TEXT NOT NULL, user_notes TEXT, user_guid TEXT, status INTEGER, priority INTEGER, tags TEXT, image_src TEXT);"
           );
           await db.execute(
               "CREATE TABLE tags(tag_guid TEXT PRIMARY KEY, title TEXT NOT NULL, is_private INTEGER NOT NULL, owner INTEGER NOT NULL);"
@@ -72,7 +72,7 @@ class DatabaseHelper {
   static Future<int> updateBookStaging(BookStaging bookStaging) async {
     final db = await _getDB();
     return await db.update("book_staging", bookStaging.toJson(),
-        where: 'bookstagingId = ?',
+        where: 'bookstaging_id = ?',
         whereArgs: [bookStaging.bookstagingId],
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
@@ -81,7 +81,7 @@ class DatabaseHelper {
     final db = await _getDB();
     return await db.delete(
       "book_staging",
-      where: 'bookstagingId = ?',
+      where: 'bookstaging_id = ?',
       whereArgs: [bookStaging.bookstagingId],
     );
   }
@@ -109,7 +109,7 @@ class DatabaseHelper {
   static Future<int> updateTag(Tag tag) async {
     final db = await _getDB();
     return await db.update("tags", tag.toJson(),
-        where: 'tagGuid = ?',
+        where: 'tag_guid = ?',
         whereArgs: [tag.tagGuid],
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
@@ -118,7 +118,7 @@ class DatabaseHelper {
     final db = await _getDB();
     return await db.delete(
       "tags",
-      where: 'tagGuid = ?',
+      where: 'tag_guid = ?',
       whereArgs: [tag.tagGuid],
     );
   }
