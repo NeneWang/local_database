@@ -157,6 +157,7 @@ class DatabaseHelper {
   }
 
 
+
   static Future<void> toggleComplete(BookStaging bookStaging) async {
     bookStaging.status = bookStaging.status == 1 ? 0 : 1;
     await updateBookStaging(bookStaging);
