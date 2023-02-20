@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_database/models/note_model.dart';
 import 'package:local_database/models/book_staging_model.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class BookWidget extends StatefulWidget {
   final BookStaging bookStaging;
