@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:local_database/models/book_staging_model.dart';
-import 'package:local_database/models/note_model.dart';
 import 'package:local_database/services/database_helper.dart';
 
 

@@ -1,4 +1,5 @@
 import 'package:local_database/models/note_model.dart';
+import 'package:local_database/services/constants.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:local_database/models/book_staging_model.dart';
@@ -135,8 +136,28 @@ class DatabaseHelper {
     return List.generate(maps.length, (index) => Tag.fromJson(maps[index]));
   }
 
-  static Future<void> toggleComplete(BookStaging bookStaging) async {
+
+  static Future<Tag> getTagByTitle(String title,
+      {bool createIfDoesntExists = false}) async {
     final db = await _getDB();
+
+    final List<Map<String, dynamic>> maps = await db.query("tags",
+    where: "title = ?",
+    whereArgs: [title],
+    limit: 1);
+
+    if (maps.isEmpty) {
+      //Create if doens't exist
+      Tag tagToCreate = Tag(tagGuid: "", title: title, owner: Constants.user_id);
+      addTag(tagToCreate);
+      return tagToCreate;
+    }
+
+    return Tag.fromJson(maps.first);
+  }
+
+
+  static Future<void> toggleComplete(BookStaging bookStaging) async {
     bookStaging.status = bookStaging.status == 1 ? 0 : 1;
     await updateBookStaging(bookStaging);
   }

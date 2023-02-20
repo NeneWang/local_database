@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:uuid/uuid.dart';
 
 class Tag {
   String tagGuid;
@@ -6,8 +7,14 @@ class Tag {
   bool isPrivate;
   int owner;
 
-  Tag({required this.tagGuid, required this.title, required this.isPrivate, required this.owner});
+  Tag({required this.tagGuid, required this.title, this.isPrivate = true, required this.owner});
   Map<String, dynamic> toJson() {
+    //If tagGUID is "" then random generate one:
+    if(tagGuid==""){
+      tagGuid = Uuid().v4();
+    }
+
+
     return {
       'tag_guid': tagGuid,
       'title': title,
