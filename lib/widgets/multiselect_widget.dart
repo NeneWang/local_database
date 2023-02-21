@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
 
 class MultiSelectWithAdd extends StatefulWidget {
   final List<String> options;
-  final String Function(String value) validator;
+  // final String Function(String value) validator;
   final void Function(List<String> values) onSaved;
 
   MultiSelectWithAdd({
     required this.options,
-    required this.validator,
+    // required this.validator,
     required this.onSaved,
   });
 

@@ -18,7 +18,7 @@ class UtilsHelper{
     return tagsId;
   }
 
-  static Future<Tag> getTagGuidByTitle(String title) async{
+  static Future<Tag> getTagByTitle(String title) async{
     //  Gets the tag by title, if its null, then create one with the current user id.
     
      Tag tagExisting = await DatabaseHelper.getTagByTitle(title, createIfDoesntExists: true);
@@ -35,7 +35,6 @@ class UtilsHelper{
     List<String> tagIds = await getTagsIDByTitle(tags);
     BookStaging newBook = BookStaging(bookTitle: book_title, userNotes: user_notes, tags: tagIds);
     DatabaseHelper.addBookStaging(newBook);
-
 
   }
 }

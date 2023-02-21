@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:local_database/models/book_staging_model.dart';
+import 'package:local_database/services/constants.dart';
 import 'package:local_database/services/database_helper.dart';
+import 'package:local_database/widgets/tags_input.dart';
 
 
 class BookScreen extends StatelessWidget {
@@ -42,6 +44,7 @@ class BookScreen extends StatelessWidget {
                 ),
               ),
             ),
+            TagsInput(),
             Padding(
               padding: const EdgeInsets.only(bottom: 40.0),
               child: TextFormField(
