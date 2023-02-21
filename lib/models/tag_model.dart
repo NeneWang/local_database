@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'package:local_database/models/PrinteableModel.dart';
 import 'package:uuid/uuid.dart';
 
-class Tag {
+class Tag extends PrintableModel {
   String tagGuid;
   String title;
   bool isPrivate;
@@ -16,10 +17,6 @@ class Tag {
   }
 
   @override
-  String toString() {
-    return 'Tag{tagGuid: $tagGuid, title: $title, isPrivate: $isPrivate, owner: $owner}';
-  }
-
   Map<String, dynamic> toJson() {
 
     return {

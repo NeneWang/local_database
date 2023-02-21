@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-class BookStaging {
+import 'package:local_database/models/PrinteableModel.dart';
+
+class BookStaging extends PrintableModel {
   int? bookstagingId;
   int? bookId;
   String bookTitle;
@@ -14,6 +16,7 @@ class BookStaging {
   BookStaging(
       {this.bookstagingId, this.bookId, required this.bookTitle, this.userNotes, this.userGuid, this.status, this.priority, this.tags, this.imageSrc});
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'bookstaging_id': bookstagingId,
