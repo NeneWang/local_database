@@ -50,7 +50,7 @@ void main() {
       differentiate("getTagsIDByTitle");
       List<String> titles = ['title', 'anothertitle'];
       List<String> tags = await Future.value(UtilsHelper.getTagsIDByTitle(titles));
-      print(tags);
+      // print(tags);
 
 
       //  Prints to check if they are correctly printed.
