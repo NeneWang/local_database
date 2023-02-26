@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:local_database/models/book_staging_model.dart';
 import 'package:local_database/screens/book_screen.dart';
-import 'package:local_database/authentication/email_password/screens/sign_in_screen.dart';
 
 import '../models/note_model.dart';
 import '../services/database_helper.dart';
@@ -35,8 +34,7 @@ class _NotesScreenState extends State<NotesScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             await Navigator.push(context,
-                // MaterialPageRoute(builder: (context) => const BookScreen()));
-                MaterialPageRoute(builder: (context) => const SignInScreen()));
+                MaterialPageRoute(builder: (context) => const BookScreen()));
             setState(() {});
           },
           child: const Icon(Icons.add),
