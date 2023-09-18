@@ -27,7 +27,7 @@ class _NotesScreenState extends State<NotesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[200],
-        appBar: AppBar(
+        appBar: AppBar(z
           title: const Text('Books'),
           centerTitle: true,
         ),
